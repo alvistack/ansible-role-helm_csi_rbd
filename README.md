@@ -1,13 +1,13 @@
-# Ansible Role for CSI RBD Driver on Kubernetes
+# Ansible Role for CSI RBD Driver with Helm
 
 <a href="https://alvistack.com" title="AlviStack" target="_blank"><img src="/alvistack.svg" height="75" alt="AlviStack"></a>
 
-[![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline/alvistack/ansible-role-kube_csi_rbd/master)](https://gitlab.com/alvistack/ansible-role-kube_csi_rbd/-/pipelines)
-[![GitHub tag](https://img.shields.io/github/tag/alvistack/ansible-role-kube_csi_rbd.svg)](https://github.com/alvistack/ansible-role-kube_csi_rbd/tags)
-[![GitHub license](https://img.shields.io/github/license/alvistack/ansible-role-kube_csi_rbd.svg)](https://github.com/alvistack/ansible-role-kube_csi_rbd/blob/master/LICENSE)
-[![Ansible Role](https://img.shields.io/badge/galaxy-alvistack.kube_csi_rbd-blue.svg)](https://galaxy.ansible.com/alvistack/kube_csi_rbd)
+[![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline/alvistack/ansible-role-helm_csi_rbd/master)](https://gitlab.com/alvistack/ansible-role-helm_csi_rbd/-/pipelines)
+[![GitHub tag](https://img.shields.io/github/tag/alvistack/ansible-role-helm_csi_rbd.svg)](https://github.com/alvistack/ansible-role-helm_csi_rbd/tags)
+[![GitHub license](https://img.shields.io/github/license/alvistack/ansible-role-helm_csi_rbd.svg)](https://github.com/alvistack/ansible-role-helm_csi_rbd/blob/master/LICENSE)
+[![Ansible Role](https://img.shields.io/badge/galaxy-alvistack.helm_csi_rbd-blue.svg)](https://galaxy.ansible.com/alvistack/helm_csi_rbd)
 
-Ansible Role for CSI RBD Driver on Kubernetes Installation.
+Ansible Role for CSI RBD Driver with Helm Installation.
 
 ## Requirements
 

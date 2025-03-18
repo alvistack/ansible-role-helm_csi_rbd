@@ -15,10 +15,10 @@
 # limitations under the License.
 
 # ClusterID is used for unique identification.
-kube_csi_rbd_cluster_id: ceph
+helm_csi_rbd_cluster_id: ceph
 
 # Ceph monitors.
-kube_csi_rbd_monitors: >-
+helm_csi_rbd_monitors: >-
   {%- set _ns = namespace() -%}
   {%- set _ns._params = [] -%}
   {%- for host in groups['ceph_mon'] -%}
@@ -27,37 +27,37 @@ kube_csi_rbd_monitors: >-
   {{ _ns._params | join(',') }}
 
 # Ceph admin id.
-kube_csi_rbd_admin_id: admin
+helm_csi_rbd_admin_id: admin
 
 # Ceph admin secret.
-kube_csi_rbd_admin_secret:
+helm_csi_rbd_admin_secret:
 
 # Ceph pool into which the RBD image shall be created.
-kube_csi_rbd_pool: rbd
+helm_csi_rbd_pool: rbd
 
 # RBD image features, CSI creates image with image-format 2 CSI RBD
 # currently supports `layering`, `journaling`, `exclusive-lock`,
 # `object-map`, `fast-diff`, `deep-flatten` features.
-kube_csi_rbd_image_features: layering
+helm_csi_rbd_image_features: layering
 
 # If set to rbd-nbd, use rbd-nbd on nodes that have rbd-nbd and nbd kernel
 # modules to map rbd images.
-kube_csi_rbd_mounter: rbd
+helm_csi_rbd_mounter: rbd
 
 # Release name to manage.
-kube_csi_rbd_helm_release_name: ceph-csi-rbd
+helm_csi_rbd_helm_release_name: ceph-csi-rbd
 
 # Kubernetes namespace where the chart should be installed.
-kube_csi_rbd_helm_release_namespace: csi-rbd
+helm_csi_rbd_helm_release_namespace: csi-rbd
 
 # Value to pass to chart.
-kube_csi_rbd_helm_release_values:
+helm_csi_rbd_helm_release_values:
   fullnameOverride: csi-rbd
   rbac:
     create: true
   csiConfig:
-    - clusterID: "{{ kube_csi_rbd_cluster_id }}"
-      monitors: "{{ kube_csi_rbd_monitors.split(',') | select() | list() }}"
+    - clusterID: "{{ helm_csi_rbd_cluster_id }}"
+      monitors: "{{ helm_csi_rbd_monitors.split(',') | select() | list() }}"
   nodeplugin:
     fullnameOverride: csi-rbdplugin
     httpMetrics:
@@ -96,17 +96,17 @@ kube_csi_rbd_helm_release_values:
   storageClass:
     create: true
     name: csi-rbd
-    clusterID: "{{ kube_csi_rbd_cluster_id }}"
-    pool: "{{ kube_csi_rbd_pool }}"
-    imageFeatures: "{{ kube_csi_rbd_image_features }}"
-    mounter: "{{ kube_csi_rbd_mounter }}"
+    clusterID: "{{ helm_csi_rbd_cluster_id }}"
+    pool: "{{ helm_csi_rbd_pool }}"
+    imageFeatures: "{{ helm_csi_rbd_image_features }}"
+    mounter: "{{ helm_csi_rbd_mounter }}"
     fstype: ext4
   secret:
     create: true
-    adminID: "{{ kube_csi_rbd_admin_id }}"
-    adminKey: "{{ kube_csi_rbd_admin_secret }}"
-    userID: "{{ kube_csi_rbd_admin_id }}"
-    userKey: "{{ kube_csi_rbd_admin_secret }}"
+    adminID: "{{ helm_csi_rbd_admin_id }}"
+    adminKey: "{{ helm_csi_rbd_admin_secret }}"
+    userID: "{{ helm_csi_rbd_admin_id }}"
+    userKey: "{{ helm_csi_rbd_admin_secret }}"
   cephconf: |
     [global]
     auth_cluster_required = cephx
