@@ -62,11 +62,11 @@
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.kube_addon_manager
+        name: alvistack.helm
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.kube_cilium
+        name: alvistack.helm_cilium
 
     - name: include role
       ansible.builtin.include_role:
@@ -85,6 +85,6 @@
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.kube_csi_rbd
+        name: alvistack.helm_csi_rbd
       vars:
-        kube_csi_rbd_admin_secret: "{{ ceph_client_admin_result.stdout }}"
+        helm_csi_rbd_admin_secret: "{{ ceph_client_admin_result.stdout }}"
