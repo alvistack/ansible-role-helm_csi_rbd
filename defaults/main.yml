@@ -31,6 +31,7 @@ kube_csi_rbd_admin_id: admin
 
 # Ceph admin secret.
 kube_csi_rbd_admin_secret:
+
 # Ceph pool into which the RBD image shall be created.
 kube_csi_rbd_pool: rbd
 
@@ -43,21 +44,73 @@ kube_csi_rbd_image_features: layering
 # modules to map rbd images.
 kube_csi_rbd_mounter: rbd
 
-# /etc/ceph-csi-config/config.json.
-kube_csi_rbd_config:
-  - clusterID: "{{ kube_csi_rbd_cluster_id }}"
-    monitors: "{{ kube_csi_rbd_monitors.split(',') | select() | list() }}"
+# Release name to manage.
+kube_csi_rbd_helm_release_name: ceph-csi-rbd
 
-# StorageClass parameters.
-kube_csi_rbd_parameters:
-  csi.storage.k8s.io/provisioner-secret-name: csi-rbd-secret
-  csi.storage.k8s.io/provisioner-secret-namespace: csi-rbd
-  csi.storage.k8s.io/controller-expand-secret-name: csi-rbd-secret
-  csi.storage.k8s.io/controller-expand-secret-namespace: csi-rbd
-  csi.storage.k8s.io/node-stage-secret-name: csi-rbd-secret
-  csi.storage.k8s.io/node-stage-secret-namespace: csi-rbd
-  csi.storage.k8s.io/fstype: ext4
-  clusterID: "{{ kube_csi_rbd_cluster_id }}"
-  pool: "{{ kube_csi_rbd_pool }}"
-  imageFeatures: "{{ kube_csi_rbd_image_features }}"
-  mounter: "{{ kube_csi_rbd_mounter }}"
+# Kubernetes namespace where the chart should be installed.
+kube_csi_rbd_helm_release_namespace: csi-rbd
+
+# Value to pass to chart.
+kube_csi_rbd_helm_release_values:
+  fullnameOverride: csi-rbd
+  rbac:
+    create: true
+  csiConfig:
+    - clusterID: "{{ kube_csi_rbd_cluster_id }}"
+      monitors: "{{ kube_csi_rbd_monitors.split(',') | select() | list() }}"
+  nodeplugin:
+    fullnameOverride: csi-rbdplugin
+    httpMetrics:
+      containerPort: 8680
+    podSecurityContext:
+      privileged: true
+      capabilities:
+        add:
+          - SYS_ADMIN
+      allowPrivilegeEscalation: true
+  provisioner:
+    fullnameOverride: csi-rbd-provisioner
+    replicaCount: 1
+    defaultFSType: ext4
+    httpMetrics:
+      containerPort: 8680
+    provisioner:
+      args:
+        httpEndpointPort: 8090
+    setmetadata: false
+    attacher:
+      args:
+        httpEndpointPort: 8093
+    resizer:
+      args:
+        httpEndpointPort: 8091
+    snapshotter:
+      args:
+        httpEndpointPort: 8092
+    podSecurityContext:
+      privileged: true
+      capabilities:
+        add:
+          - SYS_ADMIN
+      allowPrivilegeEscalation: true
+  storageClass:
+    create: true
+    name: csi-rbd
+    clusterID: "{{ kube_csi_rbd_cluster_id }}"
+    pool: "{{ kube_csi_rbd_pool }}"
+    imageFeatures: "{{ kube_csi_rbd_image_features }}"
+    mounter: "{{ kube_csi_rbd_mounter }}"
+    fstype: ext4
+  secret:
+    create: true
+    adminID: "{{ kube_csi_rbd_admin_id }}"
+    adminKey: "{{ kube_csi_rbd_admin_secret }}"
+    userID: "{{ kube_csi_rbd_admin_id }}"
+    userKey: "{{ kube_csi_rbd_admin_secret }}"
+  cephconf: |
+    [global]
+    auth_cluster_required = cephx
+    auth_service_required = cephx
+    auth_client_required = cephx
+    fuse_set_user_groups = false
+    fuse_big_writes = true
