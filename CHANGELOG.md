@@ -2,6 +2,7 @@
 
 ## 11.4.0 - TBC
 
+- Add VolumeSnapshotClass and VolumeGroupSnapshotClass support
 - Rename prefix with `helm_`
 - Simplify with Helm
 

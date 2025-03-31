@@ -101,6 +101,15 @@ helm_csi_rbd_helm_release_values:
     imageFeatures: "{{ helm_csi_rbd_image_features }}"
     mounter: "{{ helm_csi_rbd_mounter }}"
     fstype: ext4
+  volumeSnapshotClass:
+    create: true
+    name: csi-rbd
+    clusterID: "{{ helm_csi_rbd_cluster_id }}"
+  volumeGroupSnapshotClass:
+    create: true
+    name: csi-rbd
+    clusterID: "{{ helm_csi_rbd_cluster_id }}"
+    pool: "{{ helm_csi_rbd_pool }}"
   secret:
     create: true
     adminID: "{{ helm_csi_rbd_admin_id }}"

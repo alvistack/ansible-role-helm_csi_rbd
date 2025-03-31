@@ -70,6 +70,10 @@
 
     - name: include role
       ansible.builtin.include_role:
+        name: alvistack.helm_csi_snapshotter
+
+    - name: include role
+      ansible.builtin.include_role:
         name: alvistack.ceph_common
 
     - name: fetch ceph client.admin key
