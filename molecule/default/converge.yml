@@ -70,10 +70,6 @@
 
     - name: include role
       ansible.builtin.include_role:
-        name: alvistack.helm_csi_snapshotter
-
-    - name: include role
-      ansible.builtin.include_role:
         name: alvistack.ceph_common
 
     - name: fetch ceph client.admin key
@@ -86,6 +82,10 @@
       delegate_to: "{{ groups['ceph_mon'][0] }}"
       register: ceph_client_admin_result
       changed_when: ceph_client_admin_result is not succeeded
+
+    - name: include role
+      ansible.builtin.include_role:
+        name: alvistack.helm_csi_snapshotter
 
     - name: include role
       ansible.builtin.include_role:
