@@ -7,7 +7,7 @@
 [![GitHub license](https://img.shields.io/github/license/alvistack/ansible-role-helm_csi_rbd.svg)](https://github.com/alvistack/ansible-role-helm_csi_rbd/blob/master/LICENSE)
 [![Ansible Role](https://img.shields.io/badge/galaxy-alvistack.helm_csi_rbd-blue.svg)](https://galaxy.ansible.com/alvistack/helm_csi_rbd)
 
-Ansible Role for CSI RBD Driver with Helm Installation.
+Ansible Role for CSI RBD Driver with Helm.
 
 ## Requirements
 
