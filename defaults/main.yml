@@ -112,8 +112,6 @@ helm_csi_rbd_helm_release_values:
     pool: "{{ helm_csi_rbd_pool }}"
   secret:
     create: true
-    adminID: "{{ helm_csi_rbd_admin_id }}"
-    adminKey: "{{ helm_csi_rbd_admin_secret }}"
     userID: "{{ helm_csi_rbd_admin_id }}"
     userKey: "{{ helm_csi_rbd_admin_secret }}"
   cephconf: |
