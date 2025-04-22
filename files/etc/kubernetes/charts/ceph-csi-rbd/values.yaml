@@ -142,14 +142,14 @@ nodeplugin:
   registrar:
     image:
       repository: registry.k8s.io/sig-storage/csi-node-driver-registrar
-      tag: v2.11.1
+      tag: v2.13.0
       pullPolicy: IfNotPresent
     resources: {}
 
   plugin:
     image:
       repository: quay.io/cephcsi/cephcsi
-      tag: v3.13.1
+      tag: v3.14.0
       pullPolicy: IfNotPresent
     resources: {}
 
@@ -250,7 +250,7 @@ provisioner:
   provisioner:
     image:
       repository: registry.k8s.io/sig-storage/csi-provisioner
-      tag: v5.0.1
+      tag: v5.1.0
       pullPolicy: IfNotPresent
     resources: {}
     args:
@@ -270,7 +270,7 @@ provisioner:
     enabled: true
     image:
       repository: registry.k8s.io/sig-storage/csi-attacher
-      tag: v4.6.1
+      tag: v4.8.0
       pullPolicy: IfNotPresent
     resources: {}
     args:
@@ -287,7 +287,7 @@ provisioner:
     enabled: true
     image:
       repository: registry.k8s.io/sig-storage/csi-resizer
-      tag: v1.11.1
+      tag: v1.13.1
       pullPolicy: IfNotPresent
     resources: {}
     args:
@@ -527,11 +527,11 @@ storageClass:
   #   - discard
 
 volumeSnapshotClass:
-  # Specifies whether the Volume Snapshot class should be created
+  # Specifies whether the VolumeSnapshotClass should be created
   create: false
   name: csi-rbdplugin-snapclass
 
-  # Annotations for the Volume Snapshot class
+  # Annotations for the VolumeSnapshotClass
   # Example:
   # annotations:
   #   storageclass.kubernetes.io/is-default-class: "true"
@@ -540,7 +540,7 @@ volumeSnapshotClass:
   # String representing a Ceph cluster to provision storage snapshot from.
   # Should be unique across all Ceph clusters in use for provisioning,
   # cannot be greater than 36 bytes in length, and should remain immutable for
-  # the lifetime of the StorageClass in use.
+  # the lifetime of the VolumeSnapshotClass in use.
   # Ensure to create an entry in the configmap named ceph-csi-config, based on
   # csi-config-map-sample.yaml, to accompany the string chosen to
   # represent the Ceph cluster in clusterID below
@@ -560,11 +560,11 @@ volumeSnapshotClass:
   deletionPolicy: Delete
 
 volumeGroupSnapshotClass:
-  # Specifies whether the Volume Group Snapshot class should be created
+  # Specifies whether the VolumeGroupSnapshotClass should be created
   create: false
   name: csi-rbdplugin-groupsnapclass
 
-  # Annotations for the Volume Snapshot class
+  # Annotations for the VolumeGroupSnapshotClass
   # Example:
   # annotations:
   #   storageclass.kubernetes.io/is-default-class: "true"
@@ -573,7 +573,7 @@ volumeGroupSnapshotClass:
   # String representing a Ceph cluster to provision storage from.
   # Should be unique across all Ceph clusters in use for provisioning,
   # cannot be greater than 36 bytes in length, and should remain immutable for
-  # the lifetime of the StorageClass in use
+  # the lifetime of the VolumeGroupSnapshotClass in use
   clusterID: <cluster-id>
 
   # (required) Ceph pool into which the RBD image shall be created
@@ -605,6 +605,7 @@ secret:
   # Key values correspond to a user name and its key, as defined in the
   # ceph cluster. User ID should have required access to the 'pool'
   # specified in the storage class
+  # The userID must not include the "client." prefix!
   userID: <plaintext ID>
   userKey: <Ceph auth key corresponding to userID above>
   # Encryption passphrase
