@@ -149,7 +149,7 @@ nodeplugin:
   plugin:
     image:
       repository: quay.io/cephcsi/cephcsi
-      tag: v3.14.2
+      tag: v3.15.0
       pullPolicy: IfNotPresent
     resources: {}
 
@@ -546,7 +546,7 @@ volumeSnapshotClass:
   # represent the Ceph cluster in clusterID below
   clusterID: <cluster-id>
 
-  # Prefix to use for naming CephFS snapshots.
+  # Prefix to use for naming RBD snapshots.
   # If omitted, defaults to "csi-snap-".
   # snapshotNamePrefix: "foo-bar-"
   snapshotNamePrefix: ""
