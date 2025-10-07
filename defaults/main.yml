@@ -19,12 +19,12 @@ helm_csi_rbd_cluster_id: ceph
 
 # Ceph monitors.
 helm_csi_rbd_monitors: >-
-  {%- set _ns = namespace() -%}
-  {%- set _ns._params = [] -%}
+  {%- set ns = namespace() -%}
+  {%- set ns.params = [] -%}
   {%- for host in groups['ceph_mon'] -%}
-  {%-   set _ns._params = _ns._params + [hostvars[host].ansible_default_ipv4.address + ":6789"] -%}
+  {%-   set ns.params = ns.params + [hostvars[host].ansible_default_ipv4.address + ":6789"] -%}
   {%- endfor -%}
-  {{ _ns._params | join(',') }}
+  {{ ns.params | join(',') }}
 
 # Ceph admin id.
 helm_csi_rbd_admin_id: admin
