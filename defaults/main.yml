@@ -22,7 +22,7 @@ helm_csi_rbd_monitors: >-
   {%- set ns = namespace() -%}
   {%- set ns.params = [] -%}
   {%- for host in groups['ceph_mon'] -%}
-  {%-   set ns.params = ns.params + [hostvars[host].ansible_default_ipv4.address + ":6789"] -%}
+  {%-   set ns.params = ns.params + [hostvars[host].ansible_facts['default_ipv4'].address + ":6789"] -%}
   {%- endfor -%}
   {{ ns.params | join(',') }}
 
