@@ -100,3 +100,59 @@
   changed_when: result is not succeeded
   until: result is succeeded
   retries: 60
+
+- name: kubectl create StorageClass
+  vars:
+    ansible_python_interpreter: python3
+  kubernetes.core.k8s:
+    state: present
+    wait: true
+    definition:
+      apiVersion: storage.k8s.io/v1
+      kind: StorageClass
+      metadata:
+        annotations:
+          storageclass.kubernetes.io/is-default-class: "true"
+        name: csi-rbd
+      provisioner: rbd.csi.ceph.com
+  when: inventory_hostname == groups['kube_master'][0]
+  register: result
+  changed_when: result is not succeeded
+  until: result is succeeded
+  retries: 60
+
+- name: kubectl create VolumeSnapshotClass
+  vars:
+    ansible_python_interpreter: python3
+  kubernetes.core.k8s:
+    state: present
+    wait: true
+    definition:
+      apiVersion: snapshot.storage.k8s.io/v1
+      kind: VolumeSnapshotClass
+      metadata:
+        name: csi-rbd
+      driver: rbd.csi.ceph.com
+  when: inventory_hostname == groups['kube_master'][0]
+  register: result
+  changed_when: result is not succeeded
+  until: result is succeeded
+  retries: 60
+
+- name: kubectl create VolumeGroupSnapshotClass
+  vars:
+    ansible_python_interpreter: python3
+  kubernetes.core.k8s:
+    state: present
+    wait: true
+    definition:
+      apiVersion: groupsnapshot.storage.k8s.io/v1beta2
+      kind: VolumeGroupSnapshotClass
+      metadata:
+        name: csi-rbd
+      driver: rbd.csi.ceph.com
+  when: inventory_hostname == groups['kube_master'][0]
+  register: result
+  changed_when: result is not succeeded
+  until: result is succeeded
+  retries: 60
