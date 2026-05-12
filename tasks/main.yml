@@ -133,6 +133,7 @@
       metadata:
         name: csi-rbd
       driver: rbd.csi.ceph.com
+      deletionPolicy: Delete
   when: inventory_hostname == groups['kube_master'][0]
   register: result
   changed_when: result is not succeeded
@@ -151,6 +152,7 @@
       metadata:
         name: csi-rbd
       driver: rbd.csi.ceph.com
+      deletionPolicy: Delete
   when: inventory_hostname == groups['kube_master'][0]
   register: result
   changed_when: result is not succeeded
