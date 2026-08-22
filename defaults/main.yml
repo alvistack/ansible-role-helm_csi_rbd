@@ -32,6 +32,12 @@ helm_csi_rbd_admin_id: admin
 # Ceph admin secret.
 helm_csi_rbd_admin_secret:
 
+# Ceph user id.
+helm_csi_rbd_user_id: csi-rbd
+
+# Ceph user secret.
+helm_csi_rbd_user_secret:
+
 # Ceph pool into which the RBD image shall be created.
 helm_csi_rbd_pool: rbd
 
@@ -126,8 +132,8 @@ helm_csi_rbd_helm_release_values:
     pool: "{{ helm_csi_rbd_pool }}"
   secret:
     create: true
-    userID: "{{ helm_csi_rbd_admin_id }}"
-    userKey: "{{ helm_csi_rbd_admin_secret }}"
+    userID: "{{ helm_csi_rbd_user_id }}"
+    userKey: "{{ helm_csi_rbd_user_secret }}"
   cephconf: |
     [global]
     auth_cluster_required = cephx
