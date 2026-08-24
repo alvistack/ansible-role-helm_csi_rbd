@@ -33,7 +33,7 @@ helm_csi_rbd_admin_id: admin
 helm_csi_rbd_admin_secret:
 
 # Ceph user id.
-helm_csi_rbd_user_id: csi-rbd
+helm_csi_rbd_user_id: admin
 
 # Ceph user secret.
 helm_csi_rbd_user_secret:
