@@ -119,7 +119,9 @@ helm_csi_rbd_helm_release_values:
     clusterID: "{{ helm_csi_rbd_cluster_id }}"
     pool: "{{ helm_csi_rbd_pool }}"
     imageFeatures: "{{ helm_csi_rbd_image_features }}"
+    mkfsOptions: "-m 0 -O mmp,sparse_super2"
     mounter: "{{ helm_csi_rbd_mounter }}"
+    mapOptions: "lock_on_read,queue_depth=128"
     fstype: ext4
     mountOptions: ["noatime", "nodiratime", "discard", "barrier=0", "commit=60"]
   volumeSnapshotClass:
