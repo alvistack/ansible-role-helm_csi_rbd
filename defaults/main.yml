@@ -48,7 +48,7 @@ helm_csi_rbd_image_features: layering
 
 # If set to rbd-nbd, use rbd-nbd on nodes that have rbd-nbd and nbd kernel
 # modules to map rbd images.
-helm_csi_rbd_mounter: rbd
+helm_csi_rbd_mounter: krbd
 
 # Release name to manage.
 helm_csi_rbd_helm_release_name: ceph-csi-rbd
@@ -121,6 +121,7 @@ helm_csi_rbd_helm_release_values:
     imageFeatures: "{{ helm_csi_rbd_image_features }}"
     mounter: "{{ helm_csi_rbd_mounter }}"
     fstype: ext4
+    mountOptions: ["noatime", "nodiratime", "discard", "barrier=0", "commit=60"]
   volumeSnapshotClass:
     create: true
     name: csi-rbd
