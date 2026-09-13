@@ -123,7 +123,7 @@ helm_csi_rbd_helm_release_values:
     mounter: "{{ helm_csi_rbd_mounter }}"
     mapOptions: "lock_on_read,queue_depth=128"
     fstype: ext4
-    mountOptions: ["noatime", "nodiratime", "discard", "barrier=0", "commit=60"]
+    mountOptions: ["noatime", "discard", "barrier=0", "commit=60"]
   volumeSnapshotClass:
     create: true
     name: csi-rbd
